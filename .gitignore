@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Project-specific: large files that don't belong in git
+*.pt
+*.bin
+*.safetensors
+checkpoints/
+data/
+wandb/
+*.log
+
+# OS/editor junk
+.DS_Store
+.vscode/
