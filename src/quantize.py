@@ -51,3 +51,15 @@ class TernaryLinear(nn.Module):
     def forward(self, x):
         w_q = ternary_ste(self.weight)
         return F.linear(x, w_q, self.bias)
+    
+def convert_to_ternary(model):
+    """
+    Replace query_key_value, dense, dense_h_to_4h, dense_4h_to_h
+    in each GPTNeoX layer with TernaryLinear, preserving pretrained weights.
+    """
+    for layer in model.gpt_neox.layers:
+        layer.attention.query_key_value = TernaryLinear.from_linear(layer.attention.query_key_value)
+        layer.attention.dense = TernaryLinear.from_linear(layer.attention.dense)
+        layer.mlp.dense_h_to_4h = TernaryLinear.from_linear(layer.mlp.dense_h_to_4h)
+        layer.mlp.dense_4h_to_h = TernaryLinear.from_linear(layer.mlp.dense_4h_to_h)
+    return model
