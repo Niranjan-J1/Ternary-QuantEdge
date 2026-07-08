@@ -1,0 +1,15 @@
+print("Starting import...")
+from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+print("Imports done. Loading model...")
+model = AutoModelForCausalLM.from_pretrained('EleutherAI/pythia-160m')
+print("Model loaded on CPU. Moving to GPU...")
+model = model.to('cuda')
+print("Model on GPU. Loading tokenizer...")
+tok = AutoTokenizer.from_pretrained('EleutherAI/pythia-160m')
+print("Tokenizer loaded. Tokenizing input...")
+inputs = tok('The quick brown fox', return_tensors='pt').to('cuda')
+print("Generating...")
+output = model.generate(**inputs, max_new_tokens=10)
+print("Done generating. Decoding...")
+print(tok.decode(output[0]))
