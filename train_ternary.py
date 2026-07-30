@@ -1,5 +1,6 @@
 from datasets import load_dataset
 import torch
+import gc
 import sys
 from torch.utils.data import DataLoader
 from transformers import AutoModelForCausalLM, AutoTokenizer, DataCollatorForLanguageModeling
@@ -14,6 +15,7 @@ BATCH_SIZE = 4
 LEARNING_RATE = float(sys.argv[1]) if len(sys.argv) > 1 else 1e-5
 NUM_STEPS = int(sys.argv[2]) if len(sys.argv) > 2 else 1000
 LOG_EVERY = 50
+CHECKPOINT_EVERY = 5000
 
 print(f"Learning rate: {LEARNING_RATE}, Steps: {NUM_STEPS}")
 
@@ -64,11 +66,22 @@ for batch in loader:
     if step % LOG_EVERY == 0:
         print(f"Step {step} | Loss: {loss.item():.4f}")
 
+    # Periodic memory cleanup
+    if step % 500 == 0:
+        gc.collect()
+        torch.cuda.empty_cache()
+
+    # Periodic checkpointing
+    if step % CHECKPOINT_EVERY == 0 and step > 0:
+        ckpt_name = f"ternary_pythia160m_lr{LEARNING_RATE}_step{step}.pt"
+        torch.save(model.state_dict(), ckpt_name)
+        print(f"Checkpoint saved: {ckpt_name}")
+
     step += 1
     if step >= NUM_STEPS:
         break
 
-# --- Save checkpoint ---
-checkpoint_name = f"ternary_pythia160m_lr{LEARNING_RATE}.pt"
-torch.save(model.state_dict(), checkpoint_name)
-print(f"Training complete. Checkpoint saved as {checkpoint_name}.")
+# --- Final checkpoint ---
+final_name = f"ternary_pythia160m_lr{LEARNING_RATE}_final.pt"
+torch.save(model.state_dict(), final_name)
+print(f"Training complete. Final checkpoint saved as {final_name}.")
