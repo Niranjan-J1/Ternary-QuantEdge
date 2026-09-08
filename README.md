@@ -143,6 +143,3 @@ If you reference this work, please cite the accompanying paper (see `paper/terna
 
 ---
 
-## License
-
-*(Add your preferred license here, e.g. MIT.)*
