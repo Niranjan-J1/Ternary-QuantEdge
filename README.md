@@ -4,7 +4,7 @@
 
 This repo contains the code, benchmarks, and write-up for an independent research project investigating whether ternary ({-1, 0, 1}) weight quantization, implemented as a custom Triton kernel, delivers real inference speedups on a single consumer GPU (NVIDIA RTX 2060), compared against dense FP16 and off-the-shelf low-bit quantization (`bitsandbytes` INT8/INT4).
 
-> 📄 Full write-up: [`paper/ternary_kernel_whitepaper.pdf`](paper/ternary_kernel_whitepaper.pdf) ([LaTeX source](paper/ternary_kernel_whitepaper.tex))
+> 📄 Full write-up: [`Ternary_WhitePaper.pdf`](Ternary_WhitePaper.pdf) ([LaTeX source](paper/ternary_kernel_whitepaper.tex))
 
 ---
 
