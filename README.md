@@ -117,6 +117,19 @@ python make_figures.py
 | **Ternary vs. INT4** | Wins | Loses |
 
 The crossover into the compute-bound regime happens at smaller matrix sizes as batch size increases, roughly an order of magnitude earlier at M=128/256 compared to M=1/32. Full data and roofline analysis in the [paper](paper/ternary_kernel_whitepaper.pdf), Sections 4–5.
+<img width="1306" height="774" alt="fig_crossover" src="https://github.com/user-attachments/assets/7a9fdadb-dd7a-42e5-a18a-68bafe65f384" />
+
+
+Ternary-vs-INT8 speedup ratio (INT8 time / ternary time) across matrix size, one line per batch
+size. Values above the dashed line at 1.0 indicate the ternary kernel is faster. The crossover moves to smaller
+matrix sizes as batch size increases.
+
+<img width="1308" height="813" alt="fig_roofline" src="https://github.com/user-attachments/assets/e2034b61-f1ce-4f91-b943-95f0ff30000b" />
+
+Roofline analysis at M = 128: achieved throughput versus arithmetic intensity. The ternary
+kernel’s throughput plateaus well below INT8 and FP16 in the compute-bound region (right of the ridge
+point), consistent with a fixed FP16 tensor-core ceiling.
+
 
 ---
 
