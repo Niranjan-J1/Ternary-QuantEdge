@@ -23,25 +23,32 @@ See the [paper](Ternary_WhitePaper.pdf) for the full argument, roofline analysis
 
 ## Repo Structure
 
-```
 .
+├── benchmarks/
+│   ├── benchmark_suite.py             # FP16 / INT8 / INT4 / ternary timing comparison across matrix sizes
+│   ├── crossover_roofline.py          # extended size+batch sweep with roofline (compute-bound vs memory-bound) analysis
+│   └── memory_footprint.py            # peak GPU memory comparison across implementations
+├── kernels/
+│   ├── ternary_matmulKernel.py        # selection-based (tl.where) + tensor-core (tl.dot via cast) FP32/FP16 kernels
+│   ├── ternary_matmul_dot.py          # tensor-core-only kernel, used as the controlled comparison against tl.where
+│   └── ternary_matmul_dot_tuned.py    # triton.autotune sweep over block sizes / launch params
+├── results/
+│   ├── fp16_baseline/EleutherAI__pythia-160m/       # FP16 baseline eval outputs
+│   ├── fp16_baseline_wikitext/EleutherAI__pythia-160m/  # FP16 baseline on WikiText
+│   ├── int4_baseline/EleutherAI__pythia-160m/       # INT4 baseline eval outputs
+│   └── int8_baseline/EleutherAI__pythia-160m/       # INT8 baseline eval outputs
 ├── src/
-│   └── quantize.py                    # ternary_quantize(), TernarySTE, TernaryLinear, convert_to_ternary()
-├── prep_ternary_weights.py            # loads a real Pythia-160M layer, quantizes to ternary, saves to disk
-├── ternary_matmulKernel.py            # selection-based (tl.where) + tensor-core (tl.dot via cast) FP32/FP16 kernels
-├── ternary_matmul_dot.py              # tensor-core-only kernel, used as the controlled comparison against tl.where
-├── ternary_matmul_dot_tuned.py        # triton.autotune sweep over block sizes / launch params
-├── benchmark_suite.py                 # FP16 / INT8 / INT4 / ternary timing comparison across matrix sizes
-├── crossover_and_roofline.py          # extended size+batch sweep with roofline (compute-bound vs memory-bound) analysis
-├── memory_footprint.py                # peak GPU memory comparison across implementations
-├── make_figures.py                    # regenerates the two figures used in the paper from raw benchmark numbers
-├── paper/
-│   ├── ternary_kernel_whitepaper.tex
-│   ├── ternary_kernel_whitepaper.pdf
-│   ├── fig_crossover.png
-│   └── fig_roofline.png
-└── README.md
-```
+│   ├── eval_ternary.py                # evaluates the ternary model (perplexity / task metrics)
+│   ├── inspect_model.py               # inspects model weights / layer stats
+│   ├── prep_ternary_weights.py        # loads a real Pythia-160M layer, quantizes to ternary, saves to disk
+│   ├── quantize.py                    # ternary_quantize(), TernarySTE, TernaryLinear, convert_to_ternary()
+│   └── train_ternary.py               # training / fine-tuning loop for the ternary model
+├── tests/                             # unit tests
+├── .gitignore
+├── Figures.py                         # regenerates the figures used in the paper from raw benchmark numbers
+├── README.md
+├── Ternary_WhitePaper.pdf             # whitepaper
+└── requirements.txt
 
 *(Adjust paths above to match your actual repo layout if they've drifted, files above reflect what was built over the course of this project, verify filenames locally before relying on this structure.)*
 
