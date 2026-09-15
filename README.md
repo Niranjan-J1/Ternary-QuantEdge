@@ -23,7 +23,7 @@ See the [paper](Ternary_WhitePaper.pdf) for the full argument, roofline analysis
 
 ## Repo Structure
 
-.
+'''
 ├── benchmarks/
 │   ├── benchmark_suite.py             # FP16 / INT8 / INT4 / ternary timing comparison across matrix sizes
 │   ├── crossover_roofline.py          # extended size+batch sweep with roofline (compute-bound vs memory-bound) analysis
@@ -49,6 +49,7 @@ See the [paper](Ternary_WhitePaper.pdf) for the full argument, roofline analysis
 ├── README.md
 ├── Ternary_WhitePaper.pdf             # whitepaper
 └── requirements.txt
+'''
 
 *(Adjust paths above to match your actual repo layout if they've drifted, files above reflect what was built over the course of this project, verify filenames locally before relying on this structure.)*
 
