@@ -17,7 +17,7 @@ The common intuition, that ternary weights are faster because they replace multi
 - A kernel that **avoids multiplication entirely** (`tl.where`-based selection) is dramatically *slower* than a kernel that **reintroduces multiplication** via tensor cores (`tl.dot`), at every tested size. Avoiding a multiply instruction in scalar code does not skip a cycle on modern GPUs, it forfeits access to fused multiply-accumulate hardware.
 - `INT4` quantization, despite the smallest nominal weight size, uses **more peak memory** than FP16, INT8, or ternary at every size tested, likely due to dequantization-buffer overhead.
 
-See the [paper](paper/ternary_kernel_whitepaper.pdf) for the full argument, roofline analysis, and limitations.
+See the [paper](Ternary_WhitePaper.pdf) for the full argument, roofline analysis, and limitations.
 
 ---
 
