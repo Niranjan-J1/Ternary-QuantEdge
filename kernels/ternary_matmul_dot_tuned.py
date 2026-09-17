@@ -13,8 +13,6 @@ with that same shape. This means the FIRST call per shape will be slow
 (it's running the whole sweep) -- exclude it from any timing you report,
 same warm-up discipline as before, just more of it.
 
-Run:
-    D:\\Ternary-QuantEdge> python ternary_matmul_dot_tuned.py
 """
 
 import torch
