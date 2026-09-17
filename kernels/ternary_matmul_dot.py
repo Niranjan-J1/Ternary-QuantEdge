@@ -6,13 +6,6 @@ X and W using tl.dot() instead of the tl.where broadcast-and-select trick.
 tl.dot uses tensor cores -- this reintroduces "real" multiplication on
 purpose, specifically so we can measure how much of the current slowness is
 "no tensor cores" vs. something else in the kernel structure.
-
-This is NOT meant to replace your multiplication-free kernel. It's a
-control condition for isolating hypothesis 1 (tensor core usage) from
-everything else.
-
-Run:
-    D:\\Ternary-QuantEdge> python ternary_matmul_dot.py
 """
 
 import torch
